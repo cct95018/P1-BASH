@@ -24,61 +24,58 @@ echo "Instructor: Professor Fitzgerald"
 echo "Content-type: text/html"
 echo ""
 
-if [ -n "$QUERY_STRING" ] ; then 
-   cat  ./${QUERY_STRING}
+if [["$REQUEST_METHOD" == "POST"]]; then
+  echo "It is a POST method, "
+elif [[  "$REQUEST_METHOD" == "GET"  ]]; then
+  echo "It is a GET method, "
 fi
 
-if [["$REQUEST_METHOD" == "POST"]]; then
-  echo "Using POST method"
-elif [[  "$REQUEST_METHOD" == "GET"  ]]; then
-  echo "Using GET method"
+if [ -n "$QUERY_STRING" ] ; then 
+	cat  ./${QUERY_STRING}
 fi
 
 #CSS stylesheet
 echo "<link rel=\"stylesheet\" href=\"http://www.csun.edu/~cct95018/cgi-bin/style.css\" type=\"text/css\">"
 #End of CSS stylesheet
 
-echo "<br>"
 # parse query string variables
 IFS='=&'
 set -- $QUERY_STRING
-echo ${1%=*} is ${2%*=}
+echo ${1%=*}": " ${2%*=}
 # end of parse query string variables
-
-echo "<a href=\"https://www.google.com/#q=${2%*=}\">Show search result</a>"
-
 echo "<br>"
+echo "Current time: " 
+date
 echo "<html>"
 echo "  <head>"
 echo "    <title>This is my CGI program</title>"
 echo "  </head>"
 echo "	<body>"
 echo "		<h1 style=\"color:orange;\">List of Shell Environment Variables:</h1>"
-echo "CONTENT_TYPE:      $CONTENT_TYPE<br><br>"
-echo "CONTENT_LENGTH:    $CONTENT_LENGTH<br><br>"
-echo "GATEWAT_INTERFACE: $GATEWAT_INTERFACE<br><br>"
-echo "HTTP_HOST:         $HTTP_HOST<br><br>"
-echo "HTTP_USER_AGENT:   $HTTP_USER_AGENT<br><br>"
-echo "QUERY_STRING:      $QUERY_STRING<br><br>"
-echo "REQUEST_METHOD:    $REQUEST_METHOD<br><br>"
-echo "REQUEST_URI:       $REQUEST_URI<br><br>"
-echo "SERVER_PROTOCOL:   $SERVER_PROTOCOL<br><br>"
-echo "SCRIPT_FILENAME:   $SCRIPT_FILENAME<br><br>"
-echo "SCRIPT_NAME:       $SCRIPT_NAME<br><br>"
-echo "SERVER_NAME:       $SERVER_NAME<br><br>"
-echo "SERVER_PORT:       $SERVER_PORT<br><br><br>"
-echo "Current time = " 
-date
-echo "<br><br>"
+echo "<p style=\"color:yellow;background-color: black;\">"
+echo "HTTP_HOST:         $HTTP_HOST<br>"
+echo "HTTP_USER_AGENT:   $HTTP_USER_AGENT<br>"
+echo "QUERY_STRING:      $QUERY_STRING<br>"
+echo "REQUEST_METHOD:    $REQUEST_METHOD<br>"
+echo "REQUEST_URI:       $REQUEST_URI<br>"
+echo "SERVER_PROTOCOL:   $SERVER_PROTOCOL<br>"
+echo "SCRIPT_FILENAME:   $SCRIPT_FILENAME<br>"
+echo "SCRIPT_NAME:       $SCRIPT_NAME<br>"
+echo "SERVER_NAME:       $SERVER_NAME<br>"
+echo "SERVER_PORT:       $SERVER_PORT</p>"
+echo "<a href=\"http://www.csun.edu/gsearch/${2%*=}\">View this link on full website</a>"
 echo "	</body>"
-echo "<html>"
+echo "</html>"
 
+/usr/bin/curl -o /tmp/csun-cct95018 "http://www.csun.edu/gsearch/${2%*=}"
+cat /tmp/csun-cct95018
 
 # Read the body -- if it is a post
 while read _post_line ; do
   echo ${_post_line} ";loop"
 done 
 echo $_post_line
+
 
 exit 0
 

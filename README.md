@@ -4,4 +4,3 @@
 		Added stylesheet
 		Added .htaccess
 		Added method to search on csun website using the provided query string 
-		
