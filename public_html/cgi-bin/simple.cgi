@@ -41,6 +41,10 @@ set -- $QUERY_STRING
 echo ${1%=*} is ${2%*=}
 # end of parse query string variables
 
+#CSS stylesheet
+echo "<link rel=\"stylesheet\" href=\"http://www.csun.edu/~cct95018/cgi-bin/style.css\" type=\"text/css\">"
+#End of CSS stylesheet
+
 echo "<br>"
 echo "<html>"
 echo "  <head>"
