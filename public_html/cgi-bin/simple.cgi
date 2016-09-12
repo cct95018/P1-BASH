@@ -34,6 +34,10 @@ elif [[  "$REQUEST_METHOD" == "GET"  ]]; then
   echo "Using GET method"
 fi
 
+#CSS stylesheet
+echo "<link rel=\"stylesheet\" href=\"http://www.csun.edu/~cct95018/cgi-bin/style.css\" type=\"text/css\">"
+#End of CSS stylesheet
+
 echo "<br>"
 # parse query string variables
 IFS='=&'
@@ -41,9 +45,7 @@ set -- $QUERY_STRING
 echo ${1%=*} is ${2%*=}
 # end of parse query string variables
 
-#CSS stylesheet
-echo "<link rel=\"stylesheet\" href=\"http://www.csun.edu/~cct95018/cgi-bin/style.css\" type=\"text/css\">"
-#End of CSS stylesheet
+echo "<a href=\"https://www.google.com/#q=${2%*=}\">Show search result</a>"
 
 echo "<br>"
 echo "<html>"
@@ -67,7 +69,7 @@ echo "SERVER_NAME:       $SERVER_NAME<br><br>"
 echo "SERVER_PORT:       $SERVER_PORT<br><br><br>"
 echo "Current time = " 
 date
-echo "<br>"
+echo "<br><br>"
 echo "	</body>"
 echo "<html>"
 
